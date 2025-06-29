@@ -1,0 +1,73 @@
+class Solution {
+public:
+
+    int pfx( string a, string b){
+        int n = min( a.size(), b.size());
+        int l = 0;
+        while( l<n && a[l] == b[l]) l++;
+        return l;
+    }
+    vector<int> longestCommonPrefix(vector<string>& words) {
+        vector<int >ans;
+        vector<int>com; 
+
+        int n = words.size();
+        if( n<= 2 ){
+            for( int i = 0; i<n; i++)
+                  ans.push_back(0);
+            return ans;
+        }
+        int a = -1;
+         int b = -1, c =-1;
+
+        for( int i = 0; i<n-1; i++){
+            int t = pfx(words[i], words[i+1]);
+
+            if( a< t) {
+                 c = b; b = a; a = t;
+            }
+
+            
+            else if( t<= a && t> b) {
+                c = b;  b = t; 
+            }
+           else  if( t<= b && t>c && t<=a){
+                c = t; 
+            }
+            com.push_back(t);
+        }
+
+        for( int i = 0; i<n; i++){
+            if( i == 0){
+                if( com[i] == a) ans.push_back(b);
+                else ans.push_back(a);
+                
+            }
+            else if( i == n-1){
+                if( com[i-1] == a)  ans.push_back(b);
+                else ans.push_back(a);
+            }
+            else {
+        
+                int temp[3] = {a,b,c};
+                for( int j = 0; j<3 ; j++){
+                    if( temp[j] == com[i]){
+                        temp[j] = -1; break;
+                    }
+             } 
+                for( int j = 0; j<3; j++){
+                    if( temp[j] == com[i-1]){
+                        temp[j] = -1;
+                        break;
+                    }
+                }
+                
+                sort(temp, temp+3); 
+               int xy = pfx(words[i+1],words[i-1]);
+                ans.push_back( max(temp[2], xy) ) ;
+            } 
+            
+        }
+        return ans ;
+    }
+};
