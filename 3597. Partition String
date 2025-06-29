@@ -1,0 +1,24 @@
+class Solution {
+public:
+    vector<string> partitionString(string s) {
+        set<string>st;
+        
+        int l = 0, len = 0, n = s.size();
+        
+        string tem = "";
+        vector<string>ans;
+        while( l<n){
+                tem += s[l];
+            st.insert(tem);
+            if( st.size() > len){
+                ans.push_back(tem);
+                tem = "";
+                len = st.size();
+            }
+            l++;
+            
+        }
+
+        return ans;
+    }
+};
