@@ -1,0 +1,32 @@
+class Solution {
+public:
+    string reverseWords(string s) {
+        int len = s.size();
+
+        string ans ="", temp = "";
+        int i = 0;
+        bool chak = true, ok = false;
+        while( i<len){
+
+            if( s[i] == ' '&& ok) {
+                if( chak)
+                       ans = temp ; 
+                else
+                   ans = temp +" "+ ans;
+
+                 temp = ""; chak = false; ok = false;
+            }
+            else if(s[i] !=' ' ){
+                ok = true;
+                 temp +=s[i];
+            }
+            
+            i++;
+        }
+                if( chak && temp != "")
+                      ans = temp; 
+                else if( temp != "")ans = temp +" "+ ans;
+        return ans;
+        
+    }
+};
